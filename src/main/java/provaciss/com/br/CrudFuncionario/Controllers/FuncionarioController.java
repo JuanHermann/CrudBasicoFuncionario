@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import provaciss.com.br.CrudFuncionario.Models.Funcionario;
-import provaciss.com.br.CrudFuncionario.Repositories.FuncionarioRepository;
+import provaciss.com.br.CrudFuncionario.Services.FuncionarioService;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -21,36 +21,32 @@ import java.util.Map;
 public class FuncionarioController {
 
     @Autowired(required = false)
-    private FuncionarioRepository repository;
+    private FuncionarioService service;
 
     @GetMapping
     public List<Funcionario> findAll() {
-        return repository.findAll();
+        return service.listAll();
     }
 
     @GetMapping(path = {"/{id}"})
     public ResponseEntity findById(@PathVariable Long id) {
-        return repository.findById(id)
-                .map(record -> ResponseEntity.ok().body(record))
-                .orElse(ResponseEntity.notFound().build());
+        return service.findById(id);
     }
 
     @PostMapping
-    public ResponseEntity<Funcionario> createFuncionario(@Valid @RequestBody Funcionario funcionario) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-        repository.save(funcionario));
+    public ResponseEntity create(@RequestBody @Valid Funcionario funcionario) {
+        return service.create(funcionario);
     }
 
-    @PutMapping
-    public ResponseEntity updateFuncionario(@RequestBody @Valid Funcionario funcionario) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                repository.save(funcionario));
+    @PutMapping(path = {"/{id}"})
+    public ResponseEntity update(@PathVariable Long id, @RequestBody @Valid Funcionario funcionario) {
+        return service.update(id, funcionario);
+
     }
 
     @DeleteMapping(path = {"/{id}"})
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable Long id) {
-        repository.deleteById(id);
+    public ResponseEntity delete(@PathVariable Long id) {
+        return service.delete(id);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

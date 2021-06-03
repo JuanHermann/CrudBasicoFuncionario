@@ -32,6 +32,5 @@ public class Funcionario {
     @Email(message = "Email deve ser valido")
     private String email;
 
-    @
     private Long pis;
 }
