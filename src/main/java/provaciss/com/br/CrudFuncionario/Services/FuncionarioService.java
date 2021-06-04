@@ -39,7 +39,7 @@ public class FuncionarioService {
             funcionario.setId(id);
             repository.save(funcionario);
 
-            return ResponseEntity.ok().body("Funcionario alterado com sucesso.");
+            return ResponseEntity.ok().body("Funcionário alterado com sucesso.");
         }
         return funcionarioNaoEncontrado(id);
 
@@ -48,7 +48,7 @@ public class FuncionarioService {
     public ResponseEntity delete(Long id) {
         if (verificarFuncionario(id)) {
             repository.deleteById(id);
-            return ResponseEntity.ok().body("Funcionario excluido com sucesso.");
+            return ResponseEntity.ok().body("Funcionário excluido com sucesso.");
         }
 
         return funcionarioNaoEncontrado(id);
@@ -59,7 +59,7 @@ public class FuncionarioService {
     }
 
     public ResponseEntity funcionarioNaoEncontrado(Long id) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Funcionario com o ID %s não encontrado!", id));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("Funcionário com o ID %s não encontrado!", id));
     }
 
 
