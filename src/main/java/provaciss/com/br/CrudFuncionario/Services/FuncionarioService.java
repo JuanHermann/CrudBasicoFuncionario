@@ -29,7 +29,7 @@ public class FuncionarioService {
     }
 
     public ResponseEntity create(Funcionario funcionario) {
-
+        funcionario.setId(null);
         return ResponseEntity.created(URI.create("")).body(repository.save(funcionario));
     }
 
